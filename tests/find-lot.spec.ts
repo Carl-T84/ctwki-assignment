@@ -19,3 +19,17 @@ test.describe('Catawiki lot search', () => {
     await lotPage.printLotDetails();
   });
 });
+
+test.describe('Catawiki lot search', () => {
+  test('should show no match warning for item not found', async ({ page }) => {
+    const homePage = new HomePage(page);
+    const searchResultsPage = new SearchResultsPage(page);
+    const lotPage = new LotPage(page);
+
+    await homePage.open();
+    await homePage.acceptCookies();
+    await homePage.searchForItem('abc123^%$');
+
+    await searchResultsPage.verifyNoResultsFound();
+  });
+});
